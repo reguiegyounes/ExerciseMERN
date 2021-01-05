@@ -1,0 +1,10 @@
+POST http://127.0.0.1:7000/users/add 
+Content-Type: application/json
+
+{
+    "username":"walid"
+}
+
+###
+
+GET http://127.0.0.1:9000/users
