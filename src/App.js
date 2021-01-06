@@ -23,7 +23,7 @@ const useStyle=createUseStyles({
 
 function App() {
   
-  const classes=useStyle();
+ 
   return (
     <Router >
       <div >
