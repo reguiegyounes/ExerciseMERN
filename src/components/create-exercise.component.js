@@ -1,4 +1,6 @@
 import { useState,useEffect} from 'react';
+import axios from 'axios';
+
 
 import {
     Form,
@@ -34,6 +36,8 @@ function CreateExercises() {
     }
     const onFinish = (values) => {
         console.log('Success:', values);
+        axios.post('http://localhost:9000/exercises/add',values)
+        .then(res=>console.log(res.data))
       };
     
       const onFinishFailed = (errorInfo) => {
@@ -59,7 +63,7 @@ function CreateExercises() {
     useEffect(() => {
        
         setUsername('test user');
-        setUsers(['test user','user02'])
+        setUsers(['test user','user02','walid'])
 
     }, []);
     
