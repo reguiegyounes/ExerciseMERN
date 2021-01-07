@@ -51,17 +51,7 @@ function CreateExercises() {
     const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
     }
-    const onSubmit=(e)=>{
-        e.preventDefault();
-        const exercise={
-            username
-            ,description
-            ,duration
-            ,date
-        };
-        console.log(exercise);
-        window.location='/'
-    }
+ 
     
     useEffect(() => {
         axios.get("http://localhost:9000/users")

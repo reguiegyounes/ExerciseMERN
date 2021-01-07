@@ -4,7 +4,7 @@ let Exercise = require('../models/exercise.model');
 router.get('/',(req, res) => {
   Exercise.find()
     .then(exercises => res.json(exercises))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json('(route exercise)(getExercises)Error: ' + err));
 });
 
 router.post('/add',(req, res) => {
@@ -22,19 +22,19 @@ router.post('/add',(req, res) => {
 
   newExercise.save()
   .then(() => res.json('Exercise added!'))
-  .catch(err => res.status(400).json('Error: ' + err));
+  .catch(err => res.status(400).json('(route exercise)(addExercise)Error: ' + err));
 });
 
 router.get('/:id',(req, res) => {
     Exercise.findById(req.params.id)
       .then(exercise => res.json(exercise))
-      .catch(err => res.status(400).json('Error: ' + err));
+      .catch(err => res.status(400).json('(route exercise)(getOneExercise)Error: ' + err));
   });
   
   router.delete('/:id',(req, res) => {
     Exercise.findByIdAndDelete(req.params.id)
       .then(() => res.json('Exercise deleted.'))
-      .catch(err => res.status(400).json('Error: ' + err));
+      .catch(err => res.status(400).json('(route exercise)(deleteExercises)Error: ' + err));
   });
   
   router.post('/update/:id',(req, res) => {
@@ -47,9 +47,9 @@ router.get('/:id',(req, res) => {
   
         exercise.save()
           .then(() => res.json('Exercise updated!'))
-          .catch(err => res.status(400).json('Error: ' + err));
+          .catch(err => res.status(400).json('(route exercise)(getExercises)(updateExercises)Error: ' + err));
       })
-      .catch(err => res.status(400).json('Error: ' + err));
+      .catch(err => res.status(400).json('(route exercise)Error: ' + err));
   });
 
 
