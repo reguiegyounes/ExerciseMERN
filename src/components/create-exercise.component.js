@@ -1,4 +1,6 @@
 import { useState,useEffect} from 'react';
+import { Redirect } from 'react-router';
+import  CreateUser  from "./create-user.component";
 import axios from 'axios';
 
 
@@ -21,6 +23,7 @@ function CreateExercises() {
     const [duration,setDuration]=useState(0);
     const [date,setDate]=useState(new Date());
     const [users,setUsers]=useState([]);
+    const [redirect,setRrdirect]=useState(false);
 
     const onChangeUserName=(e)=>{
         setUsername(e.target.value);
@@ -61,57 +64,69 @@ function CreateExercises() {
     }
     
     useEffect(() => {
-       
-        setUsername('test user');
-        setUsers(['test user','user02','walid'])
-
+        axios.get("http://localhost:9000/users")
+        .then(res=>{
+            if(res.data.length>0){
+                setUsers(res.data.map(user=>user.username));
+                setUsername(res.data[0].username);
+            }
+            else{
+                setRrdirect(true);
+            }
+        })
     }, []);
     
-    return(
-        <>
-            <Form
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                labelCol={{
-                    span: 4,
-                }}
-                wrapperCol={{
-                    span: 14,
-                }}
-                layout="horizontal"
-                initialValues={{
-                    size: componentSize,
-                }}
-                onValuesChange={onFormLayoutChange}
-                size={componentSize}
-            >
-       
-                <Form.Item label="Username" name="username">
-                    <Select>
-                        {users.map(user=>{
-                            return(
-                                <Select.Option key={user} >{user}</Select.Option>
-                            )
-                        })}
-                    </Select>
-                </Form.Item >
-                <Form.Item label="Description" name="description">
-                    <Input.TextArea />
-                </Form.Item>
-                <Form.Item label="Duration" name="duration">
-                    <InputNumber />
-                </Form.Item>
-                <Form.Item label="Date" name="date">
-                    <DatePicker />
-                </Form.Item>
-                <Form.Item wrapperCol={{ offset: 4 }}>
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
-        </>
-    )
+    if (redirect) {
+        return <Redirect  to='/user'/>
+    }
+        return(
+            <>
+               
+                <Form
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    labelCol={{
+                        span: 4,
+                    }}
+                    wrapperCol={{
+                        span: 14,
+                    }}
+                    layout="horizontal"
+                    initialValues={{
+                        size: componentSize,
+                    }}
+                    onValuesChange={onFormLayoutChange}
+                    size={componentSize}
+                >
+                     <h1>Create Exercise</h1>
+                    <Form.Item label="Username" name="username">
+                        <Select>
+                            {users.map(user=>{
+                                return(
+                                    <Select.Option key={user} >{user}</Select.Option>
+                                )
+                            })}
+                        </Select>
+                    </Form.Item >
+                    <Form.Item label="Description" name="description">
+                        <Input.TextArea />
+                    </Form.Item>
+                    <Form.Item label="Duration" name="duration">
+                        <InputNumber />
+                    </Form.Item>
+                    <Form.Item label="Date" name="date">
+                        <DatePicker />
+                    </Form.Item>
+                    <Form.Item wrapperCol={{ offset: 4 }}>
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </>
+        )
+    
+    
 
 
 };

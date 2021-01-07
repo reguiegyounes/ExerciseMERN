@@ -1,11 +1,11 @@
-import { useState,useEffect} from 'react';
+import { useState} from 'react';
 import {Form,Input,Button} from 'antd';
 import axios from 'axios';
 
 
 function CreateUser() {
     const onFinish = (values) => {
-        console.log('Success:', values);
+        console.log('Success add user:', values);
         axios.post('http://localhost:9000/users/add',values)
         .then(res=>console.log(res.data))
       };
@@ -13,11 +13,8 @@ function CreateUser() {
       const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
       };
-    const [componentSize, setComponentSize] = useState('default');
-
-    const onFormLayoutChange = ({ size }) => {
-    setComponentSize(size);
-    }
+    
+    
     return(
         <>
         <Form
@@ -30,11 +27,8 @@ function CreateUser() {
                 span: 14,
             }}
             layout="horizontal"
-            initialValues={{
-                size: componentSize,
-            }}
-            onValuesChange={onFormLayoutChange}
-            size={componentSize}
+           
+            size='default'
         >
             <Form.Item label="Username" 
                         name="username" 
