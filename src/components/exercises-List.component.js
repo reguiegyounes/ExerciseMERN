@@ -1,6 +1,7 @@
 import { Table, Space ,Button,Col} from 'antd';
 import axios from 'axios';
 import {useEffect,useState} from 'react'
+import {Link} from 'react-router-dom';
     
  
 
@@ -18,14 +19,14 @@ function ExercisesList() {
         })
         .catch(err=>console.log('(viewExerciseList)(loadExercise)error : ',err));
     }, []);
-    
+
     const deleteExercise=(id)=>{
         axios.delete("http://localhost:9000/exercises/"+id)
         .then(res=>{console.log(res.data)})
         .catch(err=>console.log('(viewExerciseList)(deleteExercise)error : ',err));
 
         setExercises(exercises.filter(exercise=>exercise._id!==id));
-        console.log('id=',id)
+       
     }
     const columns = [
         {
@@ -53,7 +54,7 @@ function ExercisesList() {
           key: 'action',
           render: (text, record) => (
             <Space size="middle">
-              <a>Edit</a> | 
+              <Link to={'/edit/'+record._id}>Edit</Link> | 
               <a onClick={()=>deleteExercise(record._id)}>Delete</a>
             </Space>
           )
@@ -61,20 +62,25 @@ function ExercisesList() {
       ];
 
     if(loading){
-        return 'Loading ...'
+        return (
+            <Col span={22} offset={1}>
+                <h1>Loading ...</h1>
+            </Col>
+        )
     }else{
         return(
             <div>
                 <Col span={22} offset={1}>
-                <Button
-                    type="primary"
-                    style={{
-                        marginBottom: 16,
-                    }}
-                    >
-                    Add a row
-                </Button>
-                <Table columns={columns} dataSource={exercises} />
+                    <h1>Exercises list</h1>
+                    <Button
+                        type="primary"
+                        style={{
+                            marginBottom: 16,
+                        }}
+                        >
+                        Add a row
+                    </Button>
+                    <Table columns={columns} dataSource={exercises} />
                 </Col>
             </div>
              
@@ -85,3 +91,5 @@ function ExercisesList() {
 
     }
 export default ExercisesList;
+
+
