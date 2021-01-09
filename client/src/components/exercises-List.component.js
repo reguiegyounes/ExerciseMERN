@@ -12,7 +12,7 @@ function ExercisesList() {
     const [exercises,setExercises]=useState([]);
     const [loading,setLoading]=useState(true);
     useEffect(() => {
-        axios.get("http://localhost:9000/exercises")
+        axios.get("/exercises")
         .then(res=>{
             setExercises(res.data);
             setLoading(false);
@@ -21,7 +21,7 @@ function ExercisesList() {
     }, []);
 
     const deleteExercise=(id)=>{
-        axios.delete("http://localhost:9000/exercises/"+id)
+        axios.delete("/exercises/"+id)
         .then(res=>{console.log(res.data)})
         .catch(err=>console.log('(viewExerciseList)(deleteExercise)error : ',err));
 

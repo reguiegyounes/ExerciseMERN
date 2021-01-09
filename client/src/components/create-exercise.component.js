@@ -23,7 +23,7 @@ function CreateExercises() {
 
   
     const onFinish = (values) => {
-        axios.post('http://localhost:9000/exercises/add',values)
+        axios.post("/exercises/add",values)
         .then(res=>console.log(res.data))
       };
     
@@ -35,7 +35,7 @@ function CreateExercises() {
    
     
     useEffect(() => {
-        axios.get("http://localhost:9000/users")
+        axios.get(`/users`)
         .then(res=>{
             if(res.data.length>0){
                 setUsers(res.data.map(user=>user.username));
