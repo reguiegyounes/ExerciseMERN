@@ -17,7 +17,7 @@ import {
 
 function CreateExercises() {
     
-    
+    const [form] = Form.useForm();
     const [users,setUsers]=useState([]);
     const [redirect,setRrdirect]=useState(false);
 
@@ -25,6 +25,8 @@ function CreateExercises() {
     const onFinish = (values) => {
         axios.post("/exercises/add",values)
         .then(res=>console.log(res.data))
+
+        form.resetFields();
       };
     
       const onFinishFailed = (errorInfo) => {
@@ -54,6 +56,7 @@ function CreateExercises() {
                <Col span={22} offset={1}>
                    <h1>Create Exercise</h1>
                     <Form
+                        form={form}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
                         labelCol={{
@@ -66,7 +69,14 @@ function CreateExercises() {
                         
                     >
                         
-                        <Form.Item label="Username" name="username">
+                        <Form.Item label="Username" name="username"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please select username !',
+                                }
+                            ]}
+                        >
                             <Select>
                                 {users.map(user=>{
                                     return(
@@ -75,13 +85,34 @@ function CreateExercises() {
                                 })}
                             </Select>
                         </Form.Item >
-                        <Form.Item label="Description" name="description">
+                        <Form.Item label="Description" name="description"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input description !',
+                                }
+                            ]}
+                        >
                             <Input.TextArea />
                         </Form.Item>
-                        <Form.Item label="Duration" name="duration">
+                        <Form.Item label="Duration" name="duration"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input duration !',
+                                }
+                            ]}
+                        >
                             <InputNumber />
                         </Form.Item>
-                        <Form.Item label="Date" name="date">
+                        <Form.Item label="Date" name="date"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input date !',
+                                }
+                            ]}
+                        >
                             <DatePicker />
                         </Form.Item>
                         <Form.Item wrapperCol={{ offset: 4 }}>

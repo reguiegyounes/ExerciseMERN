@@ -1,13 +1,16 @@
-import { useState} from 'react';
 import {Form,Input,Button,Col} from 'antd';
 import axios from 'axios';
 
 
 function CreateUser() {
+    const [form] = Form.useForm();
+
     const onFinish = (values) => {
         console.log('Success add user:', values);
-        axios.post('http://localhost:9000/users/add',values)
+        axios.post('/users/add',values)
         .then(res=>console.log(res.data))
+
+        form.resetFields();
       };
     
       const onFinishFailed = (errorInfo) => {
@@ -21,6 +24,7 @@ function CreateUser() {
             <Col span={22} offset={1}>
                 <h1>Create User</h1>
                 <Form
+                    form={form}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                     labelCol={{

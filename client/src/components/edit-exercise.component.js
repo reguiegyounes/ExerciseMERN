@@ -1,4 +1,4 @@
-import React,{ useState,useEffect,useRef} from 'react';
+import React,{ useState,useEffect} from 'react';
 import moment from "moment";
 import { Redirect } from 'react-router';
 import axios from 'axios';
@@ -17,7 +17,7 @@ import {
   
 
 function EditExercises(props) {
-    
+    const id=props.match.params.id;
     const [form] = Form.useForm();
     const [users,setUsers]=useState([]);
     const [redirect,setRrdirect]=useState(false);
@@ -26,7 +26,7 @@ function EditExercises(props) {
 
   
     const onFinish = (values) => {
-        const id=props.match.params.id;
+        
         axios.post('http://localhost:9000/exercises/update/'+id,values)
         .then(res=>{
             setUpdated(true);
@@ -43,7 +43,7 @@ function EditExercises(props) {
     
     useEffect(() => {
 
-        axios.get("http://localhost:9000/users")
+        axios.get("/users")
         .then(res=>{
             if(res.data.length>0){
                 setUsers(res.data.map(user=>user.username));
@@ -54,13 +54,8 @@ function EditExercises(props) {
         })
         .catch(err => console.log('(Edit exercise)(getUsers)Error: ' + err));
         
-        
-    }, []);
-
-    useEffect(() => {
-       
         const id=props.match.params.id;
-        axios.get(`http://localhost:9000/exercises/${id}`)
+        axios.get(`/exercises/${id}`)
         .then(res=>{
             form.setFieldsValue({
                 username: res.data.username,
@@ -70,7 +65,10 @@ function EditExercises(props) {
             });
         })
         .catch(err => console.log('(Edit exercise)(getExercise)Error: ' + err));
+
     },[]);
+
+   
     
     if (redirect) {
         return <Redirect  to='/user'/>
@@ -96,7 +94,14 @@ function EditExercises(props) {
                         
                     >
                         
-                        <Form.Item label="Username" name="username">
+                        <Form.Item label="Username" name="username"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please select username !',
+                                }
+                            ]}
+                        >
                             <Select>
                                 {users.map(user=>{
                                     return(
@@ -105,13 +110,34 @@ function EditExercises(props) {
                                 })}
                             </Select>
                         </Form.Item >
-                        <Form.Item label="Description" name="description" > 
+                        <Form.Item label="Description" name="description" 
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input description !',
+                                }
+                            ]}
+                        > 
                             <Input.TextArea  />
                         </Form.Item>
-                        <Form.Item label="Duration" name="duration">
+                        <Form.Item label="Duration" name="duration"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input duration !',
+                                }
+                            ]}
+                        >
                             <InputNumber/>
                         </Form.Item>
-                        <Form.Item label="Date" name="date">
+                        <Form.Item label="Date" name="date"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input date !',
+                                }
+                            ]}
+                        >
                             <DatePicker />
                         </Form.Item>
                         <Form.Item wrapperCol={{ offset: 4 }}>

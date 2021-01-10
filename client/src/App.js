@@ -1,4 +1,3 @@
-import {createUseStyles} from 'react-jss';
 import {BrowserRouter as Router,Route} from 'react-router-dom';
 
 import 'antd/dist/antd.css';
@@ -10,14 +9,7 @@ import  CreateUser  from "./components/create-user.component";
 import './App.css'
 
 
-const useStyle=createUseStyles({
-  container:{
-    width:'1172px',
-    margin:'auto',
-    backgroundColor: '#fe5caa'
-  },
- 
-});
+
 
 
 
