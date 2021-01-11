@@ -10,7 +10,8 @@ import {
     Select,
     DatePicker,
     InputNumber,
-    Col
+    Col,
+    Alert
   } from 'antd';
 
   
@@ -20,11 +21,14 @@ function CreateExercises() {
     const [form] = Form.useForm();
     const [users,setUsers]=useState([]);
     const [redirect,setRrdirect]=useState(false);
+    const [alert, setAlert] = useState(false);
 
   
     const onFinish = (values) => {
         axios.post("/exercises/add",values)
-        .then(res=>console.log(res.data))
+        .then(res=>{
+            setAlert(true)
+        })
 
         form.resetFields();
       };
@@ -77,7 +81,7 @@ function CreateExercises() {
                                 }
                             ]}
                         >
-                            <Select>
+                            <Select onChange={()=>{setAlert(false)}}>
                                 {users.map(user=>{
                                     return(
                                         <Select.Option key={user} >{user}</Select.Option>
@@ -93,7 +97,7 @@ function CreateExercises() {
                                 }
                             ]}
                         >
-                            <Input.TextArea />
+                            <Input.TextArea onChange={()=>{setAlert(false)}}/>
                         </Form.Item>
                         <Form.Item label="Duration" name="duration"
                             rules={[
@@ -103,7 +107,7 @@ function CreateExercises() {
                                 }
                             ]}
                         >
-                            <InputNumber />
+                            <InputNumber onChange={()=>{setAlert(false)}}/>
                         </Form.Item>
                         <Form.Item label="Date" name="date"
                             rules={[
@@ -113,12 +117,15 @@ function CreateExercises() {
                                 }
                             ]}
                         >
-                            <DatePicker />
+                            <DatePicker onChange={()=>{setAlert(false)}}/>
                         </Form.Item>
                         <Form.Item wrapperCol={{ offset: 4 }}>
                             <Button type="primary" htmlType="submit">
                                 Submit
                             </Button>
+                        </Form.Item>
+                        <Form.Item wrapperCol={{ offset: 4 }}>
+                            {alert? <Alert message="Exercise added" type="success" showIcon /> : <div></div>}
                         </Form.Item>
                     </Form>
                </Col>

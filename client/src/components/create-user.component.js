@@ -1,14 +1,17 @@
-import {Form,Input,Button,Col} from 'antd';
+import {Form,Input,Button,Col,Alert} from 'antd';
+import React,{ useState} from 'react';
 import axios from 'axios';
+
 
 
 function CreateUser() {
     const [form] = Form.useForm();
-
+    const [alert, setAlert] = useState(false)
     const onFinish = (values) => {
-        console.log('Success add user:', values);
         axios.post('/users/add',values)
-        .then(res=>console.log(res.data))
+        .then(res=>{
+            setAlert(true)
+        })
 
         form.resetFields();
       };
@@ -24,6 +27,7 @@ function CreateUser() {
             <Col span={22} offset={1}>
                 <h1>Create User</h1>
                 <Form
+                    onC
                     form={form}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -46,13 +50,16 @@ function CreateUser() {
                                     },
                                 ]}
                     >
-                        <Input />
+                        <Input  onChange={()=>{setAlert(false)}}/>
                     </Form.Item>
                 
                     <Form.Item wrapperCol={{ offset: 4 }}>
                         <Button type="primary" htmlType="submit">
-                            Add User
+                            Add User 
                         </Button>
+                    </Form.Item>
+                    <Form.Item wrapperCol={{ offset: 4 }}>
+                        {alert? <Alert message="User added" type="success" showIcon /> : <div></div>}
                     </Form.Item>
                 </Form>
             </Col>

@@ -25,7 +25,11 @@ function App() {
         <Route path='/'   component={ExercisesList} exact/>
         <Route path='/create' component={CreateExercises}/>
         <Route path='/user' component={CreateUser}/>
-        <Route path='/edit/:id' component={EditExercise}/>
+        <Route path='/edit/:id' 
+           render={(props) => (
+            <EditExercise {...props} />
+          )}
+        />
       </div>
      
 

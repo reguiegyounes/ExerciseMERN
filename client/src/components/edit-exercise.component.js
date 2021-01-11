@@ -27,7 +27,7 @@ function EditExercises(props) {
   
     const onFinish = (values) => {
         
-        axios.post('http://localhost:9000/exercises/update/'+id,values)
+        axios.post('/exercises/update/'+id,values)
         .then(res=>{
             setUpdated(true);
         })
@@ -42,7 +42,7 @@ function EditExercises(props) {
    
     
     useEffect(() => {
-
+        
         axios.get("/users")
         .then(res=>{
             if(res.data.length>0){
@@ -54,17 +54,20 @@ function EditExercises(props) {
         })
         .catch(err => console.log('(Edit exercise)(getUsers)Error: ' + err));
         
-        const id=props.match.params.id;
+        form.setFieldsValue({
+            username: props.location.exercise.username,
+            description:props.location.exercise.description,
+            duration:props.location.exercise.duration,
+            date: moment(props.location.exercise.date)
+        });
+
+
+       /* const id=props.match.params.id;
         axios.get(`/exercises/${id}`)
         .then(res=>{
-            form.setFieldsValue({
-                username: res.data.username,
-                description:res.data.description,
-                duration:res.data.duration,
-                date: moment(res.data.date)
-            });
+            
         })
-        .catch(err => console.log('(Edit exercise)(getExercise)Error: ' + err));
+        .catch(err => console.log('(Edit exercise)(getExercise)Error: ' + err));*/
 
     },[]);
 

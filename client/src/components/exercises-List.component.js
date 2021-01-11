@@ -42,28 +42,38 @@ function ExercisesList() {
           title: 'Username',
           dataIndex: 'username',
           key: 'username',
+          fixed: 'left',
         },
         {
           title: 'Description',
           dataIndex: 'description',
-          key: 'description',
+          key: 'description'
         },
         {
           title: 'Duration',
           dataIndex: 'duration',
-          key: 'duration',
+          key: 'duration'
         },
         {
             title: 'Date',
             dataIndex: 'date',
-            key: 'date',
+            key: 'date'
         },
         {
           title: 'Action',
           key: 'action',
+          fixed: 'right',
+          
           render: (text, record) => (
             <Space size="middle">
-              <Link to={'/edit/'+record.key}>Edit</Link> | 
+              <Link 
+                to={{
+                    pathname:'/edit/'+record.key,
+                    exercise:record
+                  }}
+                  //to={'/edit/'+record.key}
+                  >Edit
+              </Link> | 
               <a onClick={()=>deleteExercise(record.key)}>Delete</a>
             </Space>
           )
@@ -81,8 +91,9 @@ function ExercisesList() {
             <div>
                 <Col span={22} offset={1}>
                     <h1>Exercises list</h1>
-                    
-                    <Table columns={columns} dataSource={exercises} />
+                </Col>
+                <Col span={22} offset={1}>
+                    <Table columns={columns} dataSource={exercises} scroll={{ x: 500 }} />
                 </Col>
             </div>
              
